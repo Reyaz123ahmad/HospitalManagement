@@ -1,0 +1,346 @@
+/* AppointmentBooking.css - Prefixed with ab- to avoid conflicts */
+
+/* Base styles */
+.ab-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.ab-booking-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.ab-booking-header h2 {
+  color: #2c3e50;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.ab-booking-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+/* Doctor card styles */
+.ab-doctor-card {
+  display: flex;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.ab-doctor-image-container {
+  position: relative;
+  flex: 0 0 280px;
+  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.ab-doctor-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ab-doctor-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #3498db;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+}
+
+.ab-doctor-info {
+  flex: 1;
+  padding: 2rem;
+  border-right: 1px solid #eee;
+}
+
+.ab-doctor-name {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.ab-doctor-specialization {
+  color: #3498db;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.ab-doctor-stats {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.ab-stat-item {
+  text-align: center;
+}
+
+.ab-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.ab-stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #7f8c8d;
+}
+
+.ab-doctor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ab-detail-item {
+  display: flex;
+}
+
+.ab-detail-label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 120px;
+}
+
+.ab-detail-value {
+  color: #34495e;
+}
+
+.ab-appointment-details {
+  flex: 0 0 320px;
+  padding: 2rem;
+  background: #f8fafc;
+}
+
+.ab-appointment-details h4 {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.ab-appointment-info {
+  margin-bottom: 1.5rem;
+}
+
+.ab-appointment-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.ab-appointment-label {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.ab-appointment-value {
+  color: #34495e;
+}
+
+.ab-fee-value {
+  color: #27ae60;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.ab-payment-summary {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.ab-summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.ab-summary-item.ab-total {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #ddd;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.ab-payment-button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ab-payment-button:hover {
+  background: linear-gradient(135deg, #2980b9, #1a2530);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.ab-payment-button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.ab-payment-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: ab-spin 1s linear infinite;
+}
+
+@keyframes ab-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Loading and message styles */
+.ab-processing-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+.ab-spinner {
+  border: 5px solid rgba(52, 152, 219, 0.2);
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: ab-spin 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+.ab-loading-text {
+  font-size: 1.2rem;
+  color: #3498db;
+  font-weight: 500;
+}
+
+.ab-message {
+  padding: 1.2rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.ab-message-error {
+  background: #ffebee;
+  color: #c62828;
+  border-left: 4px solid #c62828;
+}
+
+.ab-message-success {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+}
+
+.ab-booking-footer {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive design */
+@media (max-width: 992px) {
+  .ab-doctor-card {
+    flex-direction: column;
+  }
+  
+  .ab-doctor-image-container {
+    flex: 0 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .ab-doctor-info {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .ab-appointment-details {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .ab-container {
+    padding: 1rem;
+  }
+  
+  .ab-doctor-stats {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .ab-doctor-details .ab-detail-item {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .ab-detail-label {
+    min-width: auto;
+  }
+}

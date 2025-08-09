@@ -1,0 +1,272 @@
+:root {
+  --primary: #1a73e8;
+  --primary-dark: #0d47a1;
+  --secondary: #00c853;
+  --light: #f8f9fa;
+  --dark: #202124;
+  --gray: #5f6368;
+  --light-gray: #dadce0;
+  --border-gray: #e0e0e0;
+  --white: #ffffff;
+  --sidebar-bg: #ffffff;
+
+  --sidebar-width: 280px;
+  --sidebar-collapsed-width: 70px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radius: 8px;
+  --transition: all 0.3s ease;
+} 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} 
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 85vh;
+  background: var(--sidebar-bg);
+  box-shadow: var(--shadow);
+  position: fixed;
+  top: 75px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: var(--transition);
+  overflow-y: auto;
+}
+
+.sidebar-header { 
+  padding: .5rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.hospital-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.8rem;
+}
+
+.hospital-info h3 {
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.2rem;
+}
+
+.hospital-info p {
+  font-size: 0.85rem;
+  color: var(--gray);
+}
+
+.sidebar-content {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.user-type-badge {
+  background: rgba(26, 115, 232, 0.1);
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sidebar-section {
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-links li {
+  margin-bottom: 0.5rem;
+}
+
+.nav-links li a,
+.nav-links li .component-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  color: var(--dark);
+  text-decoration: none;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.nav-links li a:hover,
+.nav-links li .component-item:hover {
+  background: rgba(26, 115, 232, 0.08);
+  color: var(--primary);
+}
+
+.nav-links li a i,
+.nav-links li .component-item i {
+  width: 24px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.nav-links li.active a {
+  background: rgba(26, 115, 232, 0.15);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-gray);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.user-details .username {
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.user-details .user-role {
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+/* Overlay for mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid var(--border-gray);
+}
+
+.forgot-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius);
+  color: var(--dark);
+  text-decoration: none;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.forgot-link:hover {
+  background: rgba(26, 115, 232, 0.08);
+  color: var(--primary);
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sidebar-overlay {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    width: 85%;
+  }
+  
+  .hospital-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .sidebar-header {
+    padding: 1rem;
+  }
+  
+  .sidebar-content {
+    padding: 1rem;
+  }
+}
+

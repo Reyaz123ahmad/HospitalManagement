@@ -1,0 +1,333 @@
+/* CreateDoctorForm.css */
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #0d9488;
+  --light: #f8fafc;
+  --dark: #1e293b;
+  --gray: #64748b;
+  --light-gray: #e2e8f0;
+  --border: #cbd5e1;
+  --white: #ffffff;
+  --error: #ef4444;
+  --success: #22c55e;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius: 0.75rem;
+  --transition: all 0.3s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.doctor-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+.doctor-form__card {
+  width: 100%;
+  max-width: 900px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--light-gray);
+}
+
+.doctor-form__header {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: var(--white);
+  padding: 1.75rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.doctor-form__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.doctor-form__subtitle {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.doctor-form__form {
+  padding: 2rem;
+}
+
+.doctor-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.doctor-form__column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group__label {
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+.form-group__required {
+  color: var(--error);
+  margin-left: 4px;
+}
+
+.form-group__input {
+  padding: 0.85rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  transition: var(--transition);
+  background-color: var(--white);
+  color: var(--dark);
+}
+
+.form-group__input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-group--full {
+  grid-column: span 2;
+}
+
+/* Error States */
+.form-group--error .form-group__input {
+  border-color: var(--error);
+}
+
+.form-group--error .form-group__input:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.form-group__error {
+  color: var(--error);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Input with icon */
+.form-group__input-wrapper {
+  position: relative;
+}
+
+.form-group__currency {
+  position: absolute;
+  left: .2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray);
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.form-group_input-wrapper .form-group_input {
+  padding-left: 2.5rem;
+}
+
+/* Image Upload */
+.image-upload {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.image-upload__preview {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px dashed var(--light-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.form-group--error .image-upload__preview {
+  border-color: var(--error);
+}
+
+.image-upload__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-upload__placeholder {
+  text-align: center;
+  color: var(--gray);
+  padding: 1rem;
+}
+
+.image-upload__icon {
+  font-size: 3rem;
+  color: var(--light-gray);
+  margin-bottom: 0.75rem;
+}
+
+.image-upload__text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.image-upload__controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.image-upload__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 1.75rem;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  width: fit-content;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.image-upload__button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+.image-upload__button i {
+  margin-right: 0.75rem;
+}
+
+.image-upload__input {
+  display: none;
+}
+
+.image-upload__hint {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-weight: 500;
+}
+
+/* Form Actions */
+.doctor-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--light-gray);
+  padding-top: 1.75rem;
+}
+
+.doctor-form__submit {
+  background: linear-gradient(135deg, var(--secondary), #0f766e);
+  color: var(--white);
+  border: none;
+  padding: 1rem 2.25rem;
+  border-radius: var(--radius);
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 6px rgba(13, 148, 136, 0.2);
+}
+
+.doctor-form__submit:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(13, 148, 136, 0.25);
+}
+
+.doctor-form__submit:disabled {
+  background: var(--light-gray);
+  color: var(--gray);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.doctor-form__icon {
+  font-size: 1.1rem;
+}
+
+.doctor-form__spinner {
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .doctor-form__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-group--full {
+    grid-column: span 1;
+  }
+  
+  .image-upload {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .doctor-form {
+    padding: 1.5rem;
+  }
+  
+  .doctor-form__header {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .doctor-form {
+    padding: 1rem;
+  }
+  
+  .doctor-form__title {
+    font-size: 1.5rem;
+  }
+  
+  .doctor-form__submit {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  .image-upload__preview {
+    width: 120px;
+    height:120px;
+  }
+}

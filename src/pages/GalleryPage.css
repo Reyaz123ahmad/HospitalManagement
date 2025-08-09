@@ -1,0 +1,406 @@
+/* src/App.css */
+.abc-app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Gallery Page Styling with ABC Prefix */
+.abc-gallery-page {
+  width: 100%;
+}
+
+/* Hero Section */
+.abc-gallery-hero {
+  height: 60vh;
+  background: linear-gradient(rgba(0, 82, 147, 0.7), rgba(0, 82, 147, 0.7)), 
+              url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3') center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.abc-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.abc-hero-content {
+  text-align: center;
+  color: white;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.abc-hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.abc-hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+/* Gallery Container */
+.abc-gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.abc-gallery-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.abc-gallery-intro h2 {
+  font-size: 2.5rem;
+  color: #005293;
+  margin-bottom: 1rem;
+}
+
+.abc-gallery-intro p {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Category Filter */
+.abc-gallery-controls {
+  margin-bottom: 2rem;
+}
+
+.abc-category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.abc-filter-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: #e9ecef;
+  color: #495057;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.abc-filter-btn:hover {
+  background-color: #d1d7dc;
+}
+
+.abc-filter-btn.abc-active {
+  background-color: #005293;
+  color: white;
+}
+
+/* Image Gallery */
+.abc-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 2rem;
+}
+
+.abc-gallery-item {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.abc-gallery-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.abc-image-placeholder {
+  height: 200px;
+  position: relative;
+}
+
+.abc-image-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.abc-emergency {
+  background: linear-gradient(rgba(220, 53, 69, 0.8), rgba(220, 53, 69, 0.8)), 
+              url('https://images.unsplash.com/photo-1584697964358-3e14ca57658b?ixlib=rb-4.0.3') center/cover;
+}
+
+.abc-surgery {
+  background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.8)), 
+              url('https://images.unsplash.com/photo-1581595219319-4e3b8a061c89?ixlib=rb-4.0.3') center/cover;
+}
+
+.abc-pediatrics {
+  background: linear-gradient(rgba(40, 167, 69, 0.8), rgba(40, 167, 69, 0.8)), 
+              url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3') center/cover;
+}
+
+.abc-cardiology {
+  background: linear-gradient(rgba(255, 193, 7, 0.8), rgba(255, 193, 7, 0.8)), 
+              url('https://images.unsplash.com/photo-1551190822-a9333d879b1f?ixlib=rb-4.0.3') center/cover;
+}
+
+.abc-oncology {
+  background: linear-gradient(rgba(111, 66, 193, 0.8), rgba(111, 66, 193, 0.8)), 
+              url('https://images.unsplash.com/photo-1578496781985-452d4a934d50?ixlib=rb-4.0.3') center/cover;
+}
+
+.abc-image-info {
+  padding: 20px;
+}
+
+.abc-image-info h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #005293;
+  font-size: 1.3rem;
+}
+
+.abc-image-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Lightbox */
+.abc-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.abc-lightbox-content {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.abc-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s ease;
+}
+
+.abc-close-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.abc-lightbox-image {
+  height: 60vh;
+}
+
+.abc-lightbox-info {
+  padding: 25px;
+  background: white;
+  overflow-y: auto;
+  max-height: 30vh;
+}
+
+.abc-lightbox-info h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #005293;
+  font-size: 1.8rem;
+}
+
+.abc-lightbox-info p {
+  margin-bottom: 20px;
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.abc-category-tag {
+  display: inline-block;
+  padding: 5px 15px;
+  background: #e9ecef;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+/* CTA Section */
+.abc-gallery-cta {
+  background: linear-gradient(to right, #005293, #0077b6);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.abc-cta-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.abc-cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.abc-cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.abc-cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.abc-cta-btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.abc-cta-btn.abc-primary {
+  background: white;
+  color: #005293;
+}
+
+.abc-cta-btn.abc-primary:hover {
+  background: #f0f0f0;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.abc-cta-btn.abc-secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.abc-cta-btn.abc-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .abc-hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .abc-hero-content p {
+    font-size: 1.2rem;
+  }
+  
+  .abc-image-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  .abc-lightbox-content {
+    flex-direction: column;
+  }
+  
+  .abc-lightbox-image {
+    height: 40vh;
+  }
+  
+  .abc-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .abc-cta-btn {
+    width: 80%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .abc-category-filter {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .abc-filter-btn {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+  
+  .abc-image-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .abc-hero-content h1 {
+    font-size: 2rem;
+  }
+  
+  .abc-hero-content p {
+    font-size: 1rem;
+  }
+}
