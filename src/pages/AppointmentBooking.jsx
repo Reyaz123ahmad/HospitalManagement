@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import axiosInstance from "../utils/axiosInstance";
 import "./AppointmentBooking.css";
 
 const keyId = import.meta.env.VITE_RAZORPAY_KEY_ID;
@@ -57,8 +58,8 @@ const AppointmentBooking = () => {
 
   useEffect(() => {
     if (doctorId) {
-      axios
-        .post("http://localhost:3000/api/v1/doctor/getDoctorDetails", {
+      axiosInstance
+        .post("/doctor/getDoctorDetails", {
           doctorId: doctorId,
         })
         .then((res) => {
@@ -110,8 +111,8 @@ const AppointmentBooking = () => {
         appointmentTime: formData.appointmentTime,
       };
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/payment/capturePayment",
+      const response = await axiosInstance.post(
+        "/payment/capturePayment",
         payload,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -141,8 +142,8 @@ const AppointmentBooking = () => {
               amount: doctorDetails.consultationFee,
             };
 
-            await axios.post(
-              "http://localhost:3000/api/v1/payment/verifySignature",
+            await axiosInstance.post(
+              "/payment/verifySignature",
               verifyPayload,
               {
                 headers: {

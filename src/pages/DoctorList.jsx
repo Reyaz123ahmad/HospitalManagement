@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import "./DoctorList.css";
 
 export default function DoctorList() {
@@ -14,7 +15,7 @@ export default function DoctorList() {
   const fetchDoctors = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/api/v1/doctor/getAllDoctors", {
+      const res = await axiosInstance.get("/doctor/getAllDoctors", {
         headers: {
           Authorization: `Bearer ${token}`
         }

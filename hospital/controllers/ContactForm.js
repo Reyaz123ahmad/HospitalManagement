@@ -18,7 +18,7 @@ const ContactForm = async (req, res) => {
     });
 
     await newMessage.save();
-    res.status(201).json({ message: 'Your message has been received. Thank you!' });
+    res.status(201).json({success:true, message: 'Your message has been received. Thank you!' });
   } catch (error) {
     console.error('Error saving contact message:', error);
     res.status(500).json({ error: 'Something went wrong. Please try again later.' });

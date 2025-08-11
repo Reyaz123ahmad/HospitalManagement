@@ -1,4 +1,5 @@
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -16,7 +17,7 @@ const DeleteAccount = () => {
           return;
         }
 
-        const response = await axios.delete("http://localhost:3000/api/v1/auth/delete-user", {
+        const response = await axiosInstance.delete("/auth/delete-user", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

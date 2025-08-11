@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import "./ChangePassword.css"; // Make sure to create this CSS file
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -43,8 +44,8 @@ const ChangePasswordForm = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/auth/change-password",
+      const response = await axiosInstance.post(
+        "/auth/change-password",
         formData,
         {
           headers: {

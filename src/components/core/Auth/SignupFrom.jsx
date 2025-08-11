@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
+import axiosInstance from '../../../utils/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
@@ -73,7 +74,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/v1/auth/sendotp', {
+      const res = await axiosInstance.post('/auth/sendotp', {
         email,
         accountType
       });
@@ -91,7 +92,7 @@ const Signup = () => {
 
   const handleResendOtp = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/api/v1/auth/resend-otp', { email });
+      const res = await axiosInstance.post('/auth/resend-otp', { email });
       if (res.data.success) {
         toast.success("New OTP sent to your email");
         setIsResendDisabled(true);
@@ -112,7 +113,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/v1/auth/signup', {
+      const res = await axiosInstance.post('/auth/signup', {
         ...formData,
         otp: otpValue
       });

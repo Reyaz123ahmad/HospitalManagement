@@ -1,72 +1,7 @@
-// import React, { useState } from "react"
-// import axios from "axios"
 
-// const ForgotPasswordForm = () => {
-//   const [email, setEmail] = useState("")
-//   const [message, setMessage] = useState({ type: "", text: "" })
-//   const [loading, setLoading] = useState(false)
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault()
-//     setMessage({ type: "", text: "" })
-
-//     if (!email) {
-//       return setMessage({ type: "error", text: "Email is required." })
-//     }
-
-//     try {
-//       setLoading(true)
-//       const response = await axios.post(
-//         "http://localhost:3000/api/v1/auth/forgot-password",
-//         { email }
-//       )
-
-//       setMessage({ type: "success", text: response.data.message })
-//     } catch (error) {
-//       const errorMsg =
-//         error.response?.data?.message || "Something went wrong."
-//       setMessage({ type: "error", text: errorMsg })
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
-
-//   return (
-//     <div className="forgot-password-container">
-//       <h2>🔑 Forgot Password</h2>
-//       <form onSubmit={handleSubmit} className="forgot-password-form">
-//         <label htmlFor="email">Enter your registered email:</label>
-//         <input
-//           type="email"
-//           id="email"
-//           name="email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           required
-//           disabled={loading}
-//         />
-
-//         <button type="submit" disabled={loading}>
-//           {loading ? "Sending..." : "Send Reset Link"}
-//         </button>
-//       </form>
-
-//       {message.text && (
-//         <p
-//           className={`message ${
-//             message.type === "error" ? "error" : "success"
-//           }`}
-//         >
-//           {message.text}
-//         </p>
-//       )}
-//     </div>
-//   )
-// }
-
-// export default ForgotPasswordForm
 import React, { useState } from "react"
-import axios from "axios"
+//import axios from "axios"
+import axiosInstance from "../utils/axiosInstance"
 import './ForgotPassword.css'
 
 const ForgotPasswordForm = () => {
@@ -85,8 +20,8 @@ const ForgotPasswordForm = () => {
 
     try {
       setIsSubmitting(true)
-      const { data } = await axios.post(
-        "http://localhost:3000/api/v1/auth/forgot-password",
+      const { data } = await axiosInstance.post(
+        "/auth/forgot-password",
         { email }
       )
       setFeedback({ type: "success", message: data.message })

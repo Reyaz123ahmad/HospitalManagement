@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import axiosInstance from '../utils/axiosInstance';
 import './Contact.css';
+import toast from 'react-hot-toast';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,30 +21,27 @@ const Contact = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/doctor/createContact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        alert(result.message || 'Thank you for contacting us!');
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: ''
+      const response = await axiosInstance.post('/doctor/createContact', formData) 
+        
+        if(response.data.success){
+          alert(response.data.message || 'Thank you for contacting us!');
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phone: '',
+            message: ''
         });
-      } else {
-        alert(result.error || 'Something went wrong. Please try again.');
+        
+      }else{
+        alert(response.data.error || "Something went wrong please try again")
       }
-    } catch (error) {
-      console.error('Error submitting contact form:', error);
-      alert('Server error. Please try again later.');
+    }catch(error){
+      console.error("Contact form submission error:", error.message);
+
+      toast.error('server error please try again later')
     }
+    console.log(formData)
   };
 
   return (

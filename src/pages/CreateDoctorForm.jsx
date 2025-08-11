@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import './CreateDoctorForm.css';
 
 const CreateDoctorForm = () => {
@@ -19,7 +20,7 @@ const CreateDoctorForm = () => {
   const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/v1/doctor/showAllCategories")
+    axiosInstance.get("/doctor/showAllCategories")
       .then(res => setCategories(res.data.data))
       .catch(err => console.error("Error fetching categories", err));
   }, []);
@@ -94,8 +95,8 @@ const CreateDoctorForm = () => {
         formPayload.append("imageFile", doctorData.imageFile);
       }
 
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/doctor/createDoctor",
+      const res = await axiosInstance.post(
+        "/doctor/createDoctor",
         formPayload,
         {
           headers: {

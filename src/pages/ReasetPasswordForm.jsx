@@ -1,95 +1,8 @@
-// import React, { useState, useEffect } from "react"
-// import axios from "axios"
-// import { useSearchParams } from "react-router-dom"
-// import { useParams } from "react-router-dom"
 
-// const ResetPasswordForm = () => {
-// //   const [searchParams] = useSearchParams()
-// //   const token = searchParams.get("token")
-
-// const { token } = useParams()
-
-
-//   const [password, setPassword] = useState("")
-//   const [confirmPassword, setConfirmPassword] = useState("")
-//   const [message, setMessage] = useState({ type: "", text: "" })
-//   const [loading, setLoading] = useState(false)
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault()
-//     setMessage({ type: "", text: "" })
-
-//     if (!password || !confirmPassword) {
-//       return setMessage({ type: "error", text: "All fields are required." })
-//     }
-
-//     if (password !== confirmPassword) {
-//       return setMessage({ type: "error", text: "Passwords do not match." })
-//     }
-
-//     try {
-//       setLoading(true)
-//       const response = await axios.post(
-//         `http://localhost:3000/api/v1/auth/reset-password/${token}`,
-//         { newPassword:password }
-//       )
-
-//       setMessage({ type: "success", text: response.data.message })
-//     } catch (error) {
-//       const errorMsg =
-//         error.response?.data?.message || "Something went wrong."
-//       setMessage({ type: "error", text: errorMsg })
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
-
-//   return (
-//     <div className="reset-password-container">
-//       <h2>🔒 Reset Your Password</h2>
-//       <form onSubmit={handleSubmit} className="reset-password-form">
-//         <label htmlFor="password">New Password:</label>
-//         <input
-//           type="password"
-//           id="password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           disabled={loading}
-//           required
-//         />
-
-//         <label htmlFor="confirmPassword">Confirm New Password:</label>
-//         <input
-//           type="password"
-//           id="confirmPassword"
-//           value={confirmPassword}
-//           onChange={(e) => setConfirmPassword(e.target.value)}
-//           disabled={loading}
-//           required
-//         />
-
-//         <button type="submit" disabled={loading}>
-//           {loading ? "Resetting..." : "Reset Password"}
-//         </button>
-//       </form>
-
-//       {message.text && (
-//         <p
-//           className={`message ${
-//             message.type === "error" ? "error" : "success"
-//           }`}
-//         >
-//           {message.text}
-//         </p>
-//       )}
-//     </div>
-//   )
-// }
-
-// export default ResetPasswordForm
 
 import React, { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useNavigate, useParams } from "react-router-dom";
 import './ResetPassword.css'
 import toast from "react-hot-toast";
@@ -123,8 +36,8 @@ const ResetPasswordForm = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
-        `http://localhost:3000/api/v1/auth/reset-password/${token}`,
+      const response = await axiosInstance.post(
+        `/auth/reset-password/${token}`,
         { newPassword: formData.password }
       );
       setMessage({ type: "success", text: response.data.message });

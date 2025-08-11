@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+//import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import './CreateCategoryForm.css'
 
 export default function CreateCategoryForm() {
@@ -24,8 +25,8 @@ export default function CreateCategoryForm() {
     
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.post(
-        "http://localhost:3000/api/v1/doctor/createCategory", 
+      const res = await axiosInstance.post(
+        "/doctor/createCategory", 
         formData, 
         {
           headers: {
