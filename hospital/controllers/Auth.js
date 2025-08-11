@@ -3,74 +3,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const otpGenerator = require("otp-generator");
-
 const User = require("../models/UserModel");
 const OTP = require("../models/OTP");
 const Appointment = require("../models/AppointmentModel");
-
 const mailSender = require("../utils/mailSender");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 const Doctor = require("../models/DoctorModel");
-
-
 require("dotenv").config();
-
-// 📝 Signup Controller
-// exports.signup = async (req, res) => {
-//   try {
-//     const {
-//       firstName,
-//       lastName,
-//       email,
-//       password,
-//       confirmPassword,
-//       accountType,
-//       otp,
-//     } = req.body;
-
-//     if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
-//       return res.status(403).json({ success: false, message: "All fields are required" });
-//     }
-
-//     if (password !== confirmPassword) {
-//       return res.status(400).json({ success: false, message: "Password and confirm password do not match" });
-//     }
-
-//     if (!["Admin", "Doctor", "Customer"].includes(accountType)) {
-//       return res.status(400).json({ success: false, message: "Invalid account type" });
-//     }
-
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(400).json({ success: false, message: "User already exists. Please sign in." });
-//     }
-
-//     const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-//     if (recentOtp.length === 0 || otp !== recentOtp[0].otp) {
-//       return res.status(400).json({ success: false, message: "Invalid OTP" });
-//     }
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const approved = accountType === "Doctor" ? false : true;
-
-//     const user = await User.create({
-//       firstName,
-//       lastName,
-//       email,
-//       password: hashedPassword,
-//       accountType,
-//       approved,
-//       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
-//     });
-
-//     return res.status(200).json({ success: true, user, message: "User registered successfully" });
-//   } catch (error) {
-//     console.error("Signup error:", error);
-//     return res.status(500).json({ success: false, message: "User registration failed" });
-//   }
-// };
-
-
 
 exports.signup = async (req, res) => {
   try {
@@ -189,7 +128,7 @@ exports.login = async (req, res) => {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "None",
     };
 
     res.cookie("token", token, options).status(200).json({
@@ -302,7 +241,8 @@ exports.forgotPassword = async (req, res) => {
     user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
     await user.save();
 
-    const resetURL = `http://localhost:5173/reset-password/${resetToken}`;
+    const resetURL = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+
 
     await mailSender(
       user.email,

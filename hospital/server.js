@@ -33,8 +33,14 @@ app.use(
             'https://hospital-management-forntend.vercel.app'
         ],
         credentials: true
+        
+            
     })
+
+    
 );
+//app.options("*", cors());
+
 
 app.use(
 	fileUpload({
