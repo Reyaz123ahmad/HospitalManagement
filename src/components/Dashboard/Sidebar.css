@@ -1,10 +1,8 @@
-/* Sidebar.css - Updated Version */
-
-/* Mobile Menu Button (only visible on mobile) */
+/* Mobile Menu Button */
 .mobile-menu-btn {
   display: none;
   position: fixed;
-  top: 75px; /* Adjusted to appear below navbar */
+  top: 75px;
   left: 15px;
   z-index: 1001;
   background: #2563eb;
@@ -17,7 +15,7 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Overlay for mobile */
+/* Overlay */
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -29,14 +27,15 @@
   z-index: 999;
 }
 
-/* Sidebar Container - CHANGED POSITION */
+/* Sidebar Container */
 .sidebar {
   width: 250px;
-  height: calc(100vh - 60px); /* Adjusted height */
+  max-width: 80vw;
+  height: calc(100vh - 60px);
   background: linear-gradient(180deg, #1e40af 0%, #0f172a 100%);
   color: white;
   position: fixed;
-  top: 60px; /* Start below navbar */
+  top: 60px;
   left: 0;
   overflow-y: auto;
   transition: transform 0.3s ease-in-out;
@@ -44,7 +43,7 @@
   box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Hospital Logo Header */
+/* Sidebar Header */
 .sidebar-header {
   padding: 20px 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -150,7 +149,7 @@
   border-left: 4px solid #bfdbfe;
 }
 
-/* Forgot Password Link */
+/* Forgot Password */
 .forgot-password {
   padding: 15px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -205,16 +204,45 @@
   color: #93c5fd;
 }
 
+/* Collapsible Bookmark Section */
+.bookmark {
+  margin-bottom: 15px;
+}
+
+.bookmark-toggle {
+  width: 100%;
+  background: rgba(59, 130, 246, 0.2);
+  color: #e2e8f0;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.bookmark-toggle:hover {
+  background: rgba(59, 130, 246, 0.4);
+  color: white;
+}
+
 /* Responsive Styles */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 220px;
+  }
+}
+
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;
-    top: 70px; /* Adjusted for mobile */
+    top: 70px;
   }
 
   .sidebar {
-    top: 60px; /* Start below navbar on mobile */
-    height: calc(100vh - 60px); /* Full height minus navbar */
     transform: translateX(-100%);
   }
 
@@ -224,7 +252,7 @@
 
   .sidebar-overlay {
     display: block;
-    top: 60px; /* Start below navbar */
+    top: 60px;
   }
 }
 
@@ -232,8 +260,32 @@
   .sidebar {
     width: 80%;
   }
-  
+
   .mobile-menu-btn {
-    top: 65px; /* Fine-tuned position for small screens */
+    top: 65px;
+  }
+
+  .nav-links li a,
+  .nav-links li .component-item {
+    padding: 10px 15px;
+    font-size: 0.85rem;
+  }
+
+  .bookmark-toggle {
+    padding: 8px 15px;
+    font-size: 0.85rem;
+  }
+
+  .user-type-badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  .hospital-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .hospital-info p {
+    font-size: 0.7rem;
   }
 }
