@@ -1,4 +1,5 @@
-import axios from "axios"
+//import axios from "axios"
+import axiosInstance from "../../utils/axiosInstance"
 import toast from "react-hot-toast"
 
 export function login(email, password, navigate) {
@@ -6,7 +7,7 @@ export function login(email, password, navigate) {
     const toastId = toast.loading("Logging in...")
 
     try {
-      const response = await axios.post("http://localhost:3000/api/v1/auth/login", {
+      const response = await axiosInstance.post("/auth/login", {
         email,
         password,
       })
