@@ -124,6 +124,8 @@ exports.login = async (req, res) => {
     user.token = token;
     user.password = undefined;
 
+    console.log("NODE_ENV:", process.env.NODE_ENV);
+
     const options = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,

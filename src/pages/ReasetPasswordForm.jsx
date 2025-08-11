@@ -42,6 +42,8 @@ const ResetPasswordForm = () => {
       );
       setMessage({ type: "success", text: response.data.message });
       setFormData({ password: "", confirmPassword: "" });
+      toast.success('Password Reset Successfully')
+      navigate('/login')
     } catch (error) {
       const errorMsg =
         error.response?.data?.message || "Password reset failed. Please try again.";
@@ -49,8 +51,8 @@ const ResetPasswordForm = () => {
     } finally {
       setLoading(false);
     }
-    toast.success('Password Reset Successfully')
-    navigate('/login')
+    
+    
   };
 
   return (
