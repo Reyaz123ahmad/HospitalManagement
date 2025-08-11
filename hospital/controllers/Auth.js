@@ -129,16 +129,27 @@ exports.login = async (req, res) => {
     const options = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      //secure: process.env.NODE_ENV === "production",
+      secure:true,
       sameSite: "None",
     };
-
-    res.cookie("token", token, options).status(200).json({
+    // Detect if request is from browser
+    const isBrowser = req.headers['user-agent']?.includes("Mozilla");
+    if (isBrowser) {
+      res.cookie("token", token, options);
+    }
+    res.status(200).json({
       success: true,
       token,
       user,
       message: "Login successful",
     });
+    // res.cookie("token", token, options).status(200).json({
+    //   success: true,
+    //   token,
+    //   user,
+    //   message: "Login successful",
+    // });
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ success: false, message: "Login failed. Please try again." });
