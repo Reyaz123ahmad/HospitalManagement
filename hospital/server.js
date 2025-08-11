@@ -29,7 +29,8 @@ app.use(
             'http://localhost:5175',
             'http://localhost:5177',
             'https://localhost:5173',
-            'https://localhost:5177'
+            'https://localhost:5177',
+            'https://hospitalmanagement-frontend.onrender.com'
         ],
         credentials: true
     })
