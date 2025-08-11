@@ -184,24 +184,436 @@
 
 
 
-// Sidebar.jsx
-import React, { useState } from 'react';
+// import React from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// import History from './History';
+// import Delete from './Setting/Delete';
+// import './Sidebar.css';
+
+// const Sidebar = ({ accountType }) => {
+//   const location = useLocation();
+//   const isAdmin = accountType?.toLowerCase() === "admin";
+//   const isDoctor = accountType?.toLowerCase() === "doctor";
+
+//   const adminItems = [
+//     { path: "/add-doctor", label: "Add Doctor", icon: "fas fa-user-md" },
+//     { path: "/create-category", label: "Create Category", icon: "fas fa-tag" },
+//     { path: "/doctor-management", label: "Manage Doctors", icon: "fas fa-clipboard-list" }
+//   ];
+
+//   const userItems = [
+//     { path: "/doctor-list-page", label: "Book Appointment", icon: "fas fa-calendar-check" },
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-history" }
+//   ];
+
+//   const doctorItems = [
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-calendar-check" },
+//     { path: "/doctor-schedule", label: "My Schedule", icon: "fas fa-calendar-alt" },
+//     { path: "/doctor-profile", label: "My Profile", icon: "fas fa-id-card" }
+//   ];
+
+//   const commonItems = [
+//     { component: <History key="history" />, label: "History", icon: "fas fa-history" },
+//     { component: <Delete key="delete" />, label: "Account Settings", icon: "fas fa-cog" }
+//   ];
+
+//   const getPanelType = () => isAdmin ? "Admin Panel" : isDoctor ? "Doctor Panel" : "Customer Panel";
+//   const getUserType = () => isAdmin ? "Administrator" : isDoctor ? "Doctor" : "Patient";
+//   const getSectionTitle = () => isAdmin ? "Administration" : isDoctor ? "Doctor Services" : "Patient Services";
+//   const getNavItems = () => isAdmin ? adminItems : isDoctor ? doctorItems : userItems;
+//   const getUserDisplayName = () => isAdmin ? "Admin User" : isDoctor ? "Dr. Name" : "Patient";
+//   const getUserRole = () => isAdmin ? "System Administrator" : isDoctor ? "Medical Professional" : "Registered Patient";
+
+//   return (
+//     <div className="sidebar fixed">
+//       <div className="sidebar-header">
+//         <div className="hospital-logo">
+//           <div className="logo-icon"><i className="fas fa-heartbeat"></i></div>
+//           <div className="hospital-info">
+//             <h3>MediCare Hospital</h3>
+//             <p>{getPanelType()}</p>
+//           </div>
+//         </div>
+//       </div>
+
+//       <div className="sidebar-content">
+//         <div className="user-type-badge">
+//           <i className="fas fa-user-shield"></i>
+//           {getUserType()}
+//         </div>
+
+//         <div className="sidebar-section">
+//           <h4 className="section-title">{getSectionTitle()}</h4>
+//           <ul className="nav-links">
+//             {getNavItems().map((item) => (
+//               <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+//                 <Link to={item.path}>
+//                   <i className={item.icon}></i>
+//                   <span>{item.label}</span>
+//                 </Link>
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+
+//         <div className="sidebar-section">
+//           <h4 className="section-title">Account</h4>
+//           <ul className="nav-links">
+//             {commonItems.map((item, index) => (
+//               <li key={index}>
+//                 <div className="component-item">
+//                   <i className={item.icon}></i>
+//                   <span>{item.label}</span>
+//                 </div>
+//                 {item.component}
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       </div>
+
+//       <div className="forgot-password">
+//         <Link to="/change-password" className="forgot-link">
+//           <i className='fas fa-lock'></i>
+//           <span>Change Password</span>
+//         </Link>
+//       </div>
+
+//       <div className="sidebar-footer">
+//         <div className="user-info">
+//           <div className="user-avatar"><i className="fas fa-user-circle"></i></div>
+//           <div className="user-details">
+//             <p className="username">{getUserDisplayName()}</p>
+//             <p className="user-role">{getUserRole()}</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
+
+// src/components/Sidebar.js
+// import React, { useState, useEffect } from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// import History from './History';
+// import Delete from './Setting/Delete';
+// import './Sidebar.css';
+
+// const Sidebar = ({ accountType }) => {
+//   const location = useLocation();
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+//   // Handle window resize for responsiveness
+//   useEffect(() => {
+//     const handleResize = () => {
+//       const mobile = window.innerWidth < 768;
+//       setIsMobile(mobile);
+//       if (!mobile) setIsOpen(false);
+//     };
+
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   const isAdmin = accountType?.toLowerCase() === "admin";
+//   const isDoctor = accountType?.toLowerCase() === "doctor";
+
+//   const adminItems = [
+//     { path: "/add-doctor", label: "Add Doctor", icon: "fas fa-user-md" },
+//     { path: "/create-category", label: "Create Category", icon: "fas fa-tag" },
+//     { path: "/doctor-management", label: "Manage Doctors", icon: "fas fa-clipboard-list" }
+//   ];
+
+//   const userItems = [
+//     { path: "/doctor-list-page", label: "Book Appointment", icon: "fas fa-calendar-check" },
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-history" }
+//   ];
+
+//   const doctorItems = [
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-calendar-check" },
+//     { path: "/doctor-schedule", label: "My Schedule", icon: "fas fa-calendar-alt" },
+//     { path: "/doctor-profile", label: "My Profile", icon: "fas fa-id-card" }
+//   ];
+
+//   const commonItems = [
+//     { component: <History key="history" />, label: "History", icon: "fas fa-history" },
+//     { component: <Delete key="delete" />, label: "Account Settings", icon: "fas fa-cog" }
+//   ];
+
+//   const getPanelType = () => isAdmin ? "Admin Panel" : isDoctor ? "Doctor Panel" : "Customer Panel";
+//   const getUserType = () => isAdmin ? "Administrator" : isDoctor ? "Doctor" : "Patient";
+//   const getSectionTitle = () => isAdmin ? "Administration" : isDoctor ? "Doctor Services" : "Patient Services";
+//   const getNavItems = () => isAdmin ? adminItems : isDoctor ? doctorItems : userItems;
+//   const getUserDisplayName = () => isAdmin ? "Admin User" : isDoctor ? "Dr. Smith" : "John Doe";
+//   const getUserRole = () => isAdmin ? "System Administrator" : isDoctor ? "Medical Professional" : "Registered Patient";
+
+//   return (
+//     <>
+//       {/* Mobile Toggle Button */}
+//       {isMobile && (
+//         <button 
+//           className="sidebar-toggle"
+//           onClick={() => setIsOpen(!isOpen)}
+//         >
+//           <i className={isOpen ? "fas fa-times" : "fas fa-bars"}></i>
+//         </button>
+//       )}
+
+//       {/* Sidebar */}
+//       <div className={`sidebar ${isOpen ? 'open' : ''} ${isMobile ? 'mobile' : ''}`}>
+//         <div className="sidebar-header">
+//           <div className="hospital-logo">
+//             <div className="logo-icon"><i className="fas fa-heartbeat"></i></div>
+//             <div className="hospital-info">
+//               <h3>MediCare Hospital</h3>
+//               <p>{getPanelType()}</p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="sidebar-content">
+//           <div className="user-type-badge">
+//             <i className="fas fa-user-shield"></i>
+//             {getUserType()}
+//           </div>
+
+//           <div className="sidebar-section">
+//             <h4 className="section-title">{getSectionTitle()}</h4>
+//             <ul className="nav-links">
+//               {getNavItems().map((item) => (
+//                 <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+//                   <Link to={item.path} onClick={() => isMobile && setIsOpen(false)}>
+//                     <i className={item.icon}></i>
+//                     <span>{item.label}</span>
+//                   </Link>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+
+//           <div className="sidebar-section">
+//             <h4 className="section-title">Account</h4>
+//             <ul className="nav-links">
+//               {commonItems.map((item, index) => (
+//                 <li key={index}>
+//                   <div className="component-item">
+//                     <i className={item.icon}></i>
+//                     <span>{item.label}</span>
+//                   </div>
+//                   {item.component}
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         </div>
+
+//         <div className="forgot-password">
+//           <Link to="/change-password" className="forgot-link" onClick={() => isMobile && setIsOpen(false)}>
+//             <i className='fas fa-lock'></i>
+//             <span>Change Password</span>
+//           </Link>
+//         </div>
+
+//         <div className="sidebar-footer">
+//           <div className="user-info">
+//             <div className="user-avatar"><i className="fas fa-user-circle"></i></div>
+//             <div className="user-details">
+//               <p className="username">{getUserDisplayName()}</p>
+//               <p className="user-role">{getUserRole()}</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Overlay for mobile */}
+//       {isMobile && isOpen && (
+//         <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+//       )}
+//     </>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { Link, useLocation } from 'react-router-dom';
+// import History from './History';
+// import Delete from './Setting/Delete';
+// import './Sidebar.css';
+
+// const Sidebar = ({ accountType }) => {
+//   const location = useLocation();
+//   const [isOpen, setIsOpen] = useState(false);
+//   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+//   // Handle window resize for responsiveness
+//   useEffect(() => {
+//     const handleResize = () => {
+//       const mobile = window.innerWidth < 768;
+//       setIsMobile(mobile);
+//       if (!mobile) setIsOpen(false);
+//     };
+
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   const isAdmin = accountType?.toLowerCase() === "admin";
+//   const isDoctor = accountType?.toLowerCase() === "doctor";
+
+//   const adminItems = [
+//     { path: "/add-doctor", label: "Add Doctor", icon: "fas fa-user-md" },
+//     { path: "/create-category", label: "Create Category", icon: "fas fa-tag" },
+//     { path: "/doctor-management", label: "Manage Doctors", icon: "fas fa-clipboard-list" }
+//   ];
+
+//   const userItems = [
+//     { path: "/doctor-list-page", label: "Book Appointment", icon: "fas fa-calendar-check" },
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-history" }
+//   ];
+
+//   const doctorItems = [
+//     { path: "/dashboard", label: "My Appointments", icon: "fas fa-calendar-check" },
+//     { path: "/doctor-schedule", label: "My Schedule", icon: "fas fa-calendar-alt" },
+//     { path: "/doctor-profile", label: "My Profile", icon: "fas fa-id-card" }
+//   ];
+
+//   const commonItems = [
+//     { component: <History key="history" />, label: "History", icon: "fas fa-history" },
+//     { component: <Delete key="delete" />, label: "Account Settings", icon: "fas fa-cog" }
+//   ];
+
+//   const getPanelType = () => isAdmin ? "Admin Panel" : isDoctor ? "Doctor Panel" : "Customer Panel";
+//   const getUserType = () => isAdmin ? "Administrator" : isDoctor ? "Doctor" : "Patient";
+//   const getSectionTitle = () => isAdmin ? "Administration" : isDoctor ? "Doctor Services" : "Patient Services";
+//   const getNavItems = () => isAdmin ? adminItems : isDoctor ? doctorItems : userItems;
+//   const getUserDisplayName = () => isAdmin ? "Admin User" : isDoctor ? "Dr. Smith" : "John Doe";
+//   const getUserRole = () => isAdmin ? "System Administrator" : isDoctor ? "Medical Professional" : "Registered Patient";
+
+//   return (
+//     <>
+//       {/* Mobile Toggle Button */}
+//       {isMobile && (
+//         <button 
+//           className="mobile-menu-btn"
+//           onClick={() => setIsOpen(!isOpen)}
+//         >
+//           <i className={isOpen ? "fas fa-times" : "fas fa-bars"}></i>
+//         </button>
+//       )}
+
+//       {/* Sidebar */}
+//       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+//         <div className="sidebar-header">
+//           <div className="hospital-logo">
+//             <div className="logo-icon"><i className="fas fa-heartbeat"></i></div>
+//             <div className="hospital-info">
+//               <h3>MediCare Hospital</h3>
+//               <p>{getPanelType()}</p>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="sidebar-content">
+//           <div className="user-type-badge">
+//             <i className="fas fa-user-shield"></i>
+//             {getUserType()}
+//           </div>
+
+//           <div className="sidebar-section">
+//             <h4 className="section-title">{getSectionTitle()}</h4>
+//             <ul className="nav-links">
+//               {getNavItems().map((item) => (
+//                 <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+//                   <Link to={item.path} onClick={() => isMobile && setIsOpen(false)}>
+//                     <i className={item.icon}></i>
+//                     <span>{item.label}</span>
+//                   </Link>
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+
+//           <div className="sidebar-section">
+//             <h4 className="section-title">Account</h4>
+//             <ul className="nav-links">
+//               {commonItems.map((item, index) => (
+//                 <li key={index}>
+//                   <div className="component-item">
+//                     <i className={item.icon}></i>
+//                     <span>{item.label}</span>
+//                   </div>
+//                   {item.component}
+//                 </li>
+//               ))}
+//             </ul>
+//           </div>
+//         </div>
+
+//         <div className="forgot-password">
+//           <Link to="/change-password" className="forgot-link" onClick={() => isMobile && setIsOpen(false)}>
+//             <i className='fas fa-lock'></i>
+//             <span>Change Password</span>
+//           </Link>
+//         </div>
+
+//         <div className="sidebar-footer">
+//           <div className="user-info">
+//             <div className="user-avatar"><i className="fas fa-user-circle"></i></div>
+//             <div className="user-details">
+//               <p className="username">{getUserDisplayName()}</p>
+//               <p className="user-role">{getUserRole()}</p>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+      
+//       {/* Overlay for mobile */}
+//       {isMobile && isOpen && (
+//         <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+//       )}
+//     </>
+//   );
+// };
+
+// export default Sidebar;
+
+
+
+// src/components/Sidebar.js
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import History from './History';
 import Delete from './Setting/Delete';
 import './Sidebar.css';
 
 const Sidebar = ({ accountType }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [expandedSection, setExpandedSection] = useState(null);
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  
+  // Handle window resize for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) setIsOpen(false);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const isAdmin = accountType?.toLowerCase() === "admin";
   const isDoctor = accountType?.toLowerCase() === "doctor";
-
-  const toggleSidebar = () => setIsOpen(!isOpen);
-  const toggleSection = (section) =>
-    setExpandedSection(expandedSection === section ? null : section);
 
   const adminItems = [
     { path: "/add-doctor", label: "Add Doctor", icon: "fas fa-user-md" },
@@ -229,18 +641,30 @@ const Sidebar = ({ accountType }) => {
   const getUserType = () => isAdmin ? "Administrator" : isDoctor ? "Doctor" : "Patient";
   const getSectionTitle = () => isAdmin ? "Administration" : isDoctor ? "Doctor Services" : "Patient Services";
   const getNavItems = () => isAdmin ? adminItems : isDoctor ? doctorItems : userItems;
-  const getUserDisplayName = () => isAdmin ? "Admin User" : isDoctor ? "Dr. Name" : "Patient";
+  const getUserDisplayName = () => isAdmin ? "Admin User" : isDoctor ? "Dr. Smith" : "John Doe";
   const getUserRole = () => isAdmin ? "System Administrator" : isDoctor ? "Medical Professional" : "Registered Patient";
+
+  // Close sidebar when route changes
+  useEffect(() => {
+    if (isMobile) {
+      setIsOpen(false);
+    }
+  }, [location, isMobile]);
 
   return (
     <>
-      <button className="mobile-menu-btn" onClick={toggleSidebar}>
-        <i className={`fas ${isOpen ? 'fa-times' : 'fa-bars'}`}></i>
-      </button>
+      {/* Mobile Toggle Button */}
+      {isMobile && (
+        <button 
+          className="mobile-menu-btn"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <i className={isOpen ? "fas fa-times" : "fas fa-bars"}></i>
+        </button>
+      )}
 
-      {isOpen && <div className="sidebar-overlay" onClick={toggleSidebar}></div>}
-
-      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+      {/* Sidebar */}
+      <div className={`sidebar ${isOpen ? 'open' : ''} `}>
         <div className="sidebar-header">
           <div className="hospital-logo">
             <div className="logo-icon"><i className="fas fa-heartbeat"></i></div>
@@ -257,45 +681,33 @@ const Sidebar = ({ accountType }) => {
             {getUserType()}
           </div>
 
-          {/* Collapsible Section */}
-          <div className="sidebar-section bookmark">
-            <button className="bookmark-toggle" onClick={() => toggleSection("main")}>
-              {getSectionTitle()}
-              <i className={`fas ${expandedSection === "main" ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
-            </button>
-            {expandedSection === "main" && (
-              <ul className="nav-links">
-                {getNavItems().map((item) => (
-                  <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
-                    <Link to={item.path} onClick={() => setIsOpen(false)}>
-                      <i className={item.icon}></i>
-                      <span>{item.label}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="sidebar-section">
+            <h4 className="section-title">{getSectionTitle()}</h4>
+            <ul className="nav-links">
+              {getNavItems().map((item) => (
+                <li key={item.path} className={location.pathname === item.path ? 'active' : ''}>
+                  <Link to={item.path}>
+                    <i className={item.icon}></i>
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Collapsible Account Section */}
-          <div className="sidebar-section bookmark">
-            <button className="bookmark-toggle" onClick={() => toggleSection("account")}>
-              Account
-              <i className={`fas ${expandedSection === "account" ? "fa-chevron-up" : "fa-chevron-down"}`}></i>
-            </button>
-            {expandedSection === "account" && (
-              <ul className="nav-links">
-                {commonItems.map((item, index) => (
-                  <li key={index}>
-                    <div className="component-item">
-                      <i className={item.icon}></i>
-                      <span>{item.label}</span>
-                    </div>
-                    {item.component}
-                  </li>
-                ))}
-              </ul>
-            )}
+          <div className="sidebar-section">
+            <h4 className="section-title">Account</h4>
+            <ul className="nav-links">
+              {commonItems.map((item, index) => (
+                <li key={index}>
+                  <div className="component-item">
+                    <i className={item.icon}></i>
+                    <span>{item.label}</span>
+                  </div>
+                  {item.component}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -316,13 +728,13 @@ const Sidebar = ({ accountType }) => {
           </div>
         </div>
       </div>
+      
+      {/* Overlay for mobile */}
+      {isMobile && isOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsOpen(false)} />
+      )}
     </>
   );
 };
 
 export default Sidebar;
-
-
-
-
-

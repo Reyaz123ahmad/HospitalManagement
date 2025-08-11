@@ -23,7 +23,7 @@ import GalleryPage from './pages/GalleryPage';
 
 const App = () => {
   return (
-    <div>
+    <div className='app-container'>
       <Navbar/>
       
       

@@ -44,6 +44,16 @@ exports.signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ success: false, message: "User already exists. Please sign in." });
     }
+    // 🔒 Prevent multiple Admin registrations
+    if (accountType.toLowerCase() === "admin") {
+      const existingAdmin = await User.findOne({ accountType:{$regex: /^admin$/i} });
+      if (existingAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Admin account already exists. Only one admin allowed.",
+        });
+      }
+    }
 
     // 🔐 Verify OTP
     const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
@@ -90,6 +100,16 @@ exports.signup = async (req, res) => {
     return res.status(500).json({ success: false, message: "User registration failed" });
   }
 };
+
+
+
+
+
+
+
+
+
+
 
 
 // 🔐 Login Controller
@@ -157,9 +177,54 @@ exports.login = async (req, res) => {
 };
 
 // 📩 Send OTP Controller
+// exports.sendotp = async (req, res) => {
+//   try {
+//     const { email } = req.body;
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(401).json({ success: false, message: "User already registered" });
+//     }
+
+//     let otp;
+//     let result;
+//     do {
+//       otp = otpGenerator.generate(6, {
+//         upperCaseAlphabets: false,
+//         lowerCaseAlphabets: false,
+//         specialChars: false,
+//       });
+//       result = await OTP.findOne({ otp });
+//     } while (result);
+
+//     await OTP.create({ email, otp });
+
+//     res.status(200).json({ success: true, message: "OTP sent successfully", otp });
+//   } catch (error) {
+//     console.error("Send OTP error:", error);
+//     return res.status(500).json({ success: false, message: "Failed to send OTP" });
+//   }
+// };
+
+
 exports.sendotp = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, accountType } = req.body;
+
+    if (!email || !accountType) {
+      return res.status(400).json({ success: false, message: "Email and account type are required" });
+    }
+
+    // 🔒 Prevent multiple Admin OTPs
+    if (accountType.toLowerCase() === "admin") {
+      const existingAdmin = await User.findOne({ accountType: { $regex: /^admin$/i } });
+      if (existingAdmin) {
+        return res.status(403).json({
+          success: false,
+          message: "Admin account already exists. OTP not allowed.",
+        });
+      }
+    }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -185,6 +250,7 @@ exports.sendotp = async (req, res) => {
     return res.status(500).json({ success: false, message: "Failed to send OTP" });
   }
 };
+
 
 // 🔄 Change Password Controller
 exports.changePassword = async (req, res) => {

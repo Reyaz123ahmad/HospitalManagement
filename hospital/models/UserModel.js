@@ -29,7 +29,8 @@ const userSchema=new mongoose.Schema(
             enum:[
                 "Admin", "Doctor","Customer"
             ],
-            required:true
+            required:true,
+            
         },
         assignedDoctor:{
             type:mongoose.Schema.Types.ObjectId,
@@ -61,5 +62,9 @@ const userSchema=new mongoose.Schema(
 
     },
     { timestamps: true }
-)
+    
+);
+
+
+
 module.exports=mongoose.model('User',userSchema)
