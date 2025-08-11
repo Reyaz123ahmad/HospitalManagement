@@ -30,7 +30,7 @@ app.use(
             'http://localhost:5177',
             'https://localhost:5173',
             'https://localhost:5177',
-            'https://hospitalmanagement-frontend.onrender.com'
+            'https://hospital-management-forntend.vercel.app'
         ],
         credentials: true
     })
