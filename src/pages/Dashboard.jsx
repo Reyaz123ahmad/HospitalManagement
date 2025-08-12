@@ -26,7 +26,11 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('booked');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const [isClick,setIsClick]=useState(false);
+  
+  function handleSidebarMenu(){
+    setIsClick(prev => !prev); 
+  } 
   useEffect(() => {
     const storedAccountType = localStorage.getItem('accountType');
     if (storedAccountType && storedAccountType !== 'null' && storedAccountType !== 'undefined') {
@@ -226,10 +230,20 @@ const Dashboard = () => {
   return (
     <div className="dashboardContainer">
       <div className="sidebarWrapper">
-        <Sidebar accountType={accountType} />
+        {
+          isClick ? (
+            <>
+              <Sidebar accountType={accountType} />
+              <button onClick={() => setIsClick(false)} className='sidebar-close-btn'>Close Sidebar</button>
+            </>
+          ) : (
+            <button onClick={handleSidebarMenu} className='sidebar-close-btn'>SidebarMenu</button>
+          )
+        }
       </div>
 
       <div className="mainContent">
+
         <div className="dashboard-header">
           <h2>Your Appointments</h2>
           <button className="refresh-btn" onClick={fetchAppointments}>

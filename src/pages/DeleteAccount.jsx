@@ -41,7 +41,7 @@ const DeleteAccount = () => {
     };
 
     deleteUser();
-  }, [navigate]);
+  }, []);
 
   return null; // You can show a spinner or message if you want
 };
