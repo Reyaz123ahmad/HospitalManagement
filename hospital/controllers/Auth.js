@@ -207,6 +207,55 @@ exports.login = async (req, res) => {
 // };
 
 
+// exports.sendotp = async (req, res) => {
+//   try {
+//     const { email, accountType } = req.body;
+
+//     if (!email || !accountType) {
+//       return res.status(400).json({ success: false, message: "Email and account type are required" });
+//     }
+
+//     // 🔒 Prevent multiple Admin OTPs
+//     if (accountType.toLowerCase() === "admin") {
+//       const existingAdmin = await User.findOne({ accountType: { $regex: /^admin$/i } });
+//       if (existingAdmin) {
+//         return res.status(403).json({
+//           success: false,
+//           message: "Admin account already exists. OTP not allowed.",
+//         });
+//       }
+//     }
+
+//     const existingUser = await User.findOne({ email });
+//     if (existingUser) {
+//       return res.status(401).json({ success: false, message: "User already registered" });
+//     }
+
+//     let otp;
+//     let result;
+//     do {
+//       otp = otpGenerator.generate(6, {
+//         upperCaseAlphabets: false,
+//         lowerCaseAlphabets: false,
+//         specialChars: false,
+//       });
+//       result = await OTP.findOne({ otp });
+//     } while (result);
+
+//     await OTP.create({ email, otp });
+
+//     res.status(200).json({ success: true, message: "OTP sent successfully", otp });
+//   } catch (error) {
+//     console.error("Send OTP error:", error);
+//     return res.status(500).json({ success: false, message: "Failed to send OTP" });
+//   }
+// };
+
+// const otpGenerator = require("otp-generator");
+// const OTP = require("../models/OTP");
+// const User = require("../models/UserModel");
+// const mailSender = require("../utils/mailSender");
+
 exports.sendotp = async (req, res) => {
   try {
     const { email, accountType } = req.body;
@@ -226,11 +275,13 @@ exports.sendotp = async (req, res) => {
       }
     }
 
+    // 🔍 Check if user already registered
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(401).json({ success: false, message: "User already registered" });
     }
 
+    // 🔢 Generate unique OTP
     let otp;
     let result;
     do {
@@ -242,14 +293,23 @@ exports.sendotp = async (req, res) => {
       result = await OTP.findOne({ otp });
     } while (result);
 
+    // 💾 Save OTP to DB
     await OTP.create({ email, otp });
 
-    res.status(200).json({ success: true, message: "OTP sent successfully", otp });
+    // 📩 Send OTP via email
+    await mailSender(
+      email,
+      "Your OTP Code",
+      `<p>Your OTP for signup is <strong>${otp}</strong>. It is valid for 10 minutes.</p>`
+    );
+
+    return res.status(200).json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
     console.error("Send OTP error:", error);
     return res.status(500).json({ success: false, message: "Failed to send OTP" });
   }
 };
+
 
 
 // 🔄 Change Password Controller
