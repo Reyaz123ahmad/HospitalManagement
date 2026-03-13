@@ -113,6 +113,68 @@ exports.signup = async (req, res) => {
 
 
 // 🔐 Login Controller
+// exports.login = async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     if (!email || !password) {
+//       return res.status(400).json({ success: false, message: "Please fill in all required fields" });
+//     }
+
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(401).json({ success: false, message: "User not registered. Please sign up." });
+//     }
+
+//     if (user.accountType === "Doctor" && user.approved) {
+//       return res.status(403).json({ success: false, message: "Your account is pending approval" });
+//     }
+
+//     const isMatch = await bcrypt.compare(password, user.password);
+//     if (!isMatch) {
+//       return res.status(401).json({ success: false, message: "Incorrect password" });
+//     }
+
+//     const token = jwt.sign(
+//       { email: user.email, id: user._id, accountType: user.accountType },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "24h" }
+//     );
+
+//     user.token = token;
+//     user.password = undefined;
+
+//     console.log("NODE_ENV:", process.env.NODE_ENV);
+
+//     const options = {
+//       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+//       httpOnly: true,
+//       //secure: process.env.NODE_ENV === "production",
+//       secure:true,
+//       sameSite: "None",
+//     };
+//     // Detect if request is from browser
+//     const isBrowser = req.headers['user-agent']?.includes("Mozilla");
+//     if (isBrowser) {
+//       res.cookie("token", token, options);
+//     }
+//     res.status(200).json({
+//       success: true,
+//       token,
+//       user,
+//       message: "Login successful",
+//     });
+//     // res.cookie("token", token, options).status(200).json({
+//     //   success: true,
+//     //   token,
+//     //   user,
+//     //   message: "Login successful",
+//     // });
+//   } catch (error) {
+//     console.error("Login error:", error);
+//     return res.status(500).json({ success: false, message: "Login failed. Please try again." });
+//   }
+// };
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -126,8 +188,22 @@ exports.login = async (req, res) => {
       return res.status(401).json({ success: false, message: "User not registered. Please sign up." });
     }
 
-    if (user.accountType === "Doctor" && user.approved) {
-      return res.status(403).json({ success: false, message: "Your account is pending approval" });
+    // ✅ FIXED: Doctor approval check
+    if (user.accountType === "Doctor") {
+      // Agar approved field exist karti hai aur false hai
+      if (user.approved === false) {
+        return res.status(403).json({ 
+          success: false, 
+          message: "Your account is pending approval from admin" 
+        });
+      }
+      // Agar approved field exist nahi karti, to bhi pending approval
+      if (user.approved === undefined) {
+        return res.status(403).json({ 
+          success: false, 
+          message: "Your account is pending approval from admin" 
+        });
+      }
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -149,141 +225,57 @@ exports.login = async (req, res) => {
     const options = {
       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       httpOnly: true,
-      //secure: process.env.NODE_ENV === "production",
-      secure:true,
-      sameSite: "None",
+      secure: process.env.NODE_ENV === "production", // Dynamic based on environment
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     };
-    // Detect if request is from browser
+    
     const isBrowser = req.headers['user-agent']?.includes("Mozilla");
     if (isBrowser) {
       res.cookie("token", token, options);
     }
+    
     res.status(200).json({
       success: true,
       token,
       user,
       message: "Login successful",
     });
-    // res.cookie("token", token, options).status(200).json({
-    //   success: true,
-    //   token,
-    //   user,
-    //   message: "Login successful",
-    // });
+
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ success: false, message: "Login failed. Please try again." });
   }
 };
 
-// 📩 Send OTP Controller
-// exports.sendotp = async (req, res) => {
-//   try {
-//     const { email } = req.body;
 
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(401).json({ success: false, message: "User already registered" });
-//     }
-
-//     let otp;
-//     let result;
-//     do {
-//       otp = otpGenerator.generate(6, {
-//         upperCaseAlphabets: false,
-//         lowerCaseAlphabets: false,
-//         specialChars: false,
-//       });
-//       result = await OTP.findOne({ otp });
-//     } while (result);
-
-//     await OTP.create({ email, otp });
-
-//     res.status(200).json({ success: true, message: "OTP sent successfully", otp });
-//   } catch (error) {
-//     console.error("Send OTP error:", error);
-//     return res.status(500).json({ success: false, message: "Failed to send OTP" });
-//   }
-// };
-
-
-// exports.sendotp = async (req, res) => {
-//   try {
-//     const { email, accountType } = req.body;
-
-//     if (!email || !accountType) {
-//       return res.status(400).json({ success: false, message: "Email and account type are required" });
-//     }
-
-//     // 🔒 Prevent multiple Admin OTPs
-//     if (accountType.toLowerCase() === "admin") {
-//       const existingAdmin = await User.findOne({ accountType: { $regex: /^admin$/i } });
-//       if (existingAdmin) {
-//         return res.status(403).json({
-//           success: false,
-//           message: "Admin account already exists. OTP not allowed.",
-//         });
-//       }
-//     }
-
-//     const existingUser = await User.findOne({ email });
-//     if (existingUser) {
-//       return res.status(401).json({ success: false, message: "User already registered" });
-//     }
-
-//     let otp;
-//     let result;
-//     do {
-//       otp = otpGenerator.generate(6, {
-//         upperCaseAlphabets: false,
-//         lowerCaseAlphabets: false,
-//         specialChars: false,
-//       });
-//       result = await OTP.findOne({ otp });
-//     } while (result);
-
-//     await OTP.create({ email, otp });
-
-//     res.status(200).json({ success: true, message: "OTP sent successfully", otp });
-//   } catch (error) {
-//     console.error("Send OTP error:", error);
-//     return res.status(500).json({ success: false, message: "Failed to send OTP" });
-//   }
-// };
-
-// const otpGenerator = require("otp-generator");
-// const OTP = require("../models/OTP");
-// const User = require("../models/UserModel");
-// const mailSender = require("../utils/mailSender");
 
 exports.sendotp = async (req, res) => {
   try {
     const { email, accountType } = req.body;
+    console.log("📩 Incoming OTP request:", { email, accountType });
 
     if (!email || !accountType) {
+      console.warn("⚠️ Missing email or accountType");
       return res.status(400).json({ success: false, message: "Email and account type are required" });
     }
 
-    // 🔒 Prevent multiple Admin OTPs
     if (accountType.toLowerCase() === "admin") {
       const existingAdmin = await User.findOne({ accountType: { $regex: /^admin$/i } });
+      console.log("🔍 Admin check:", existingAdmin ? "Admin exists" : "No admin found");
       if (existingAdmin) {
-        return res.status(403).json({
-          success: false,
-          message: "Admin account already exists. OTP not allowed.",
-        });
+        return res.status(403).json({ success: false, message: "Admin account already exists. OTP not allowed." });
       }
     }
 
-    // 🔍 Check if user already registered
     const existingUser = await User.findOne({ email });
+    console.log("🔍 User check:", existingUser ? "User exists" : "User not found");
     if (existingUser) {
       return res.status(401).json({ success: false, message: "User already registered" });
     }
 
-    // 🔢 Generate unique OTP
     let otp;
     let result;
+    let attempts = 0;
     do {
       otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -291,25 +283,25 @@ exports.sendotp = async (req, res) => {
         specialChars: false,
       });
       result = await OTP.findOne({ otp });
-    } while (result);
+      attempts++;
+    } while (result && attempts < 5);
+    console.log("🔢 Generated OTP:", otp);
 
-    // 💾 Save OTP to DB
-    await OTP.create({ email, otp });
-
-    // 📩 Send OTP via email
-    await mailSender(
-      email,
-      "Your OTP Code",
-      `<p>Your OTP for signup is <strong>${otp}</strong>. It is valid for 10 minutes.</p>`
-    );
+    try {
+      const newOtp = new OTP({ email, otp });
+      await newOtp.save();
+      console.log("✅ OTP saved to DB and email hook triggered");
+    } catch (dbError) {
+      console.error("❌ OTP DB save error:", dbError);
+      return res.status(500).json({ success: false, message: "Failed to save OTP to database" });
+    }
 
     return res.status(200).json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
-    console.error("Send OTP error:", error);
+    console.error("🔥 Unhandled sendotp error:", error);
     return res.status(500).json({ success: false, message: "Failed to send OTP" });
   }
 };
-
 
 
 // 🔄 Change Password Controller

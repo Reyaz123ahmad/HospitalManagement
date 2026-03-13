@@ -34,9 +34,9 @@ exports.connect = async () => {
       socketTimeoutMS: 3000,
     });
 
-    console.log("✅ DB Connected Successfully");
+    console.log("DB Connected Successfully");
 
-    // 🔐 Create partial unique index for Admin
+    //Create partial unique index for Admin
     await mongoose.connection.db.collection("users").createIndex(
       { accountType: 1 },
       {
@@ -45,10 +45,10 @@ exports.connect = async () => {
       }
     );
 
-    console.log("🔒 Admin index ensured");
+    console.log("Admin index ensured");
 
   } catch (error) {
-    console.log("❌ DB Connection Failed");
+    console.log("DB Connection Failed");
     console.error(error);
     process.exit(1);
   }

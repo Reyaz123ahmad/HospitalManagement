@@ -1,11 +1,8 @@
-
 const express =  require('express');
-
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const userRoutes=require('./routes/User');
-
 const doctorRoutes=require('./routes/Doctor')
 const paymentRoutes=require('./routes/Payments')
 const {cloudinaryConnect } = require("./config/cloudinary");
@@ -25,7 +22,7 @@ app.use(cookieParser());
 app.use(
     cors({
         origin: [
-            'http://localhost:3000', // Add this if keeping backend on 3000
+            'http://localhost:3000', 
             'http://localhost:5173', 
             'http://localhost:5174',
             'http://localhost:5175',

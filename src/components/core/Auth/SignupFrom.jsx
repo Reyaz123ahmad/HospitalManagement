@@ -61,6 +61,7 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted");
     setError('');
 
     if (password !== confirmPassword) {
@@ -77,6 +78,7 @@ const Signup = () => {
       const res = await axiosInstance.post('/auth/sendotp', {
         email,
         accountType
+        
       });
       
       if (res.data.success) {
@@ -95,6 +97,8 @@ const Signup = () => {
       const res = await axiosInstance.post('/auth/resend-otp', { email });
       if (res.data.success) {
         toast.success("New OTP sent to your email");
+        console.log("Sending OTP to:", email, accountType);
+
         setIsResendDisabled(true);
         setResendTimer(30);
       }

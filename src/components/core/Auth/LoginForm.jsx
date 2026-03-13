@@ -26,7 +26,8 @@ function LoginForm() {
     await login(email, password,navigate)()
     
   }
-
+// Login component mein
+console.log("🔍 API Base URL:", import.meta.env.VITE_API_BASE_URL);
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="form-group">
