@@ -30,12 +30,12 @@ export function login(email, password, navigate) {
         image: userImage,
       }
 
-      // ✅ Save to localStorage
+      
       localStorage.setItem("user", JSON.stringify(userWithImage))
       localStorage.setItem("token", response.data.token)
-      localStorage.setItem("accountType", user.accountType)  // ✅ This is the fix
+      localStorage.setItem("accountType", user.accountType)  
 
-      // ✅ Navigate to dashboard
+      
       navigate("/dashboard")
     } catch (error) {
       console.log("LOGIN API ERROR............", error)

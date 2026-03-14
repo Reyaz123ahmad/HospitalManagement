@@ -29,7 +29,7 @@ exports.capturePayment = async (req, res) => {
 
     const appointmentDateTime = new Date(`${appointmentDate}T${appointmentTime}`);
 
-    // ✅ Check if patient has booked any appointment in last 24 hours
+    
     const latestAppointment = await Appointment.findOne({
       patient: userId,
       status: { $in: ["booked", "completed"] },
@@ -47,7 +47,7 @@ exports.capturePayment = async (req, res) => {
       }
     }
 
-    // ✅ Check if slot is already taken
+   
     const slotTaken = await Appointment.findOne({
       doctor: doctor_id,
       appointmentDateTime,
@@ -123,7 +123,7 @@ exports.verifySignature = async (req, res) => {
 
     const appointmentDateTime = new Date(`${appointmentDate}T${appointmentTime}`);
 
-    // ✅ Check if patient has booked any appointment in last 24 hours
+  
     const latestAppointment = await Appointment.findOne({
       patient: userId,
       status: { $in: ["booked", "completed"] },
@@ -141,7 +141,7 @@ exports.verifySignature = async (req, res) => {
       }
     }
 
-    // ✅ Create appointment
+    
     const appointment = await Appointment.create({
       doctor: doctor_id,
       patient: userId,

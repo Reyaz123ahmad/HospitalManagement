@@ -2,10 +2,10 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../models/UserModel");
 
-// 🔐 Middleware: Authenticate User
+
 exports.auth = async (req, res, next) => {
   try {
-    // Extract token from cookie, body, or header
+    
     const token =
       req.cookies?.token ||
       req.body?.token ||
@@ -43,9 +43,7 @@ exports.auth = async (req, res, next) => {
   }
 };
 
-//
-// 🧑‍🎓 Role Middleware: Customer
-//
+
 exports.isCustomer = async (req, res, next) => {
   try {
     if (req.user.accountType?.toLowerCase() !== "customer") {
@@ -64,9 +62,7 @@ exports.isCustomer = async (req, res, next) => {
   }
 };
 
-//
-// 🩺 Role Middleware: Doctor
-//
+
 exports.isDoctor = async (req, res, next) => {
   try {
     if (req.user.accountType?.toLowerCase() !== "doctor") {
@@ -85,9 +81,7 @@ exports.isDoctor = async (req, res, next) => {
   }
 };
 
-//
-// 🛡️ Role Middleware: Admin
-//
+
 exports.isAdmin = async (req, res, next) => {
   try {
     if (req.user.accountType?.toLowerCase() !== "admin") {

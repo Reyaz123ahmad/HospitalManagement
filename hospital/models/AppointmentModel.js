@@ -34,12 +34,11 @@ const appointmentSchema = new mongoose.Schema({
   },
   expiresAt: {
     type: Date,
-    default: () => new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from creation
+    default: () => new Date(Date.now() + 24 * 60 * 60 * 1000), 
   },
 });
 
-// Optional: TTL index if you want to auto-delete expired appointments
-// appointmentSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
 
 module.exports = mongoose.model("Appointment", appointmentSchema);
 

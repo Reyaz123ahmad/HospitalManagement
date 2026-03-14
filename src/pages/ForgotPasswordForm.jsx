@@ -37,7 +37,7 @@ const ForgotPasswordForm = () => {
   return (
     <div className="centered-container">
       <section className="form-card">
-        <h2 className="form-title">🔐 Forgot Your Password?</h2>
+        <h2 className="form-title">Forgot Your Password?</h2>
         <p className="form-description">
           Enter your registered email address and we’ll send you a reset link.
         </p>

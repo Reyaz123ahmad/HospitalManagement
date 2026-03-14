@@ -29,7 +29,8 @@ app.use(
             'http://localhost:5177',
             'https://localhost:5173',
             'https://localhost:5177',
-            'https://hospital-management-forntend.vercel.app'
+            'https://hospital-management-forntend.vercel.app',
+            'https://hospitalmanagement-backend-6dti.onrender.com'
         ],
         credentials: true
         

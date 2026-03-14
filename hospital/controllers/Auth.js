@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
       consultationFee,
     } = req.body;
 
-    // 🔒 Validate required fields
+    
     if (!firstName || !lastName || !email || !password || !confirmPassword || !otp) {
       return res.status(403).json({ success: false, message: "All fields are required" });
     }
@@ -39,12 +39,12 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid account type" });
     }
 
-    // 🔍 Check if user already exists
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ success: false, message: "User already exists. Please sign in." });
     }
-    // 🔒 Prevent multiple Admin registrations
+    
     if (accountType.toLowerCase() === "admin") {
       const existingAdmin = await User.findOne({ accountType:{$regex: /^admin$/i} });
       if (existingAdmin) {
@@ -55,17 +55,17 @@ exports.signup = async (req, res) => {
       }
     }
 
-    // 🔐 Verify OTP
+    
     const recentOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
     if (recentOtp.length === 0 || otp !== recentOtp[0].otp) {
       return res.status(400).json({ success: false, message: "Invalid OTP" });
     }
 
-    // 🔑 Hash password
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     const approved = accountType === "Doctor" ? false : true;
 
-    // 👤 Create User
+    
     const user = await User.create({
       firstName,
       lastName,
@@ -76,7 +76,7 @@ exports.signup = async (req, res) => {
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });
 
-    // 🩺 Create Doctor Profile if applicable
+    
     if (accountType === "Doctor") {
       await Doctor.create({
         userId: user._id,
@@ -86,9 +86,9 @@ exports.signup = async (req, res) => {
         consultationFee,
       });
 
-      // 📩 Optional: Notify Admin via email
+      
       await mailSender(
-        "admin@example.com", // Replace with actual admin email
+        "admin@example.com", 
         "New Doctor Approval Request",
         `Doctor ${firstName} ${lastName} has signed up and is awaiting approval.`
       );
@@ -112,69 +112,8 @@ exports.signup = async (req, res) => {
 
 
 
-// 🔐 Login Controller
-// exports.login = async (req, res) => {
-//   try {
-//     const { email, password } = req.body;
 
-//     if (!email || !password) {
-//       return res.status(400).json({ success: false, message: "Please fill in all required fields" });
-//     }
 
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(401).json({ success: false, message: "User not registered. Please sign up." });
-//     }
-
-//     if (user.accountType === "Doctor" && user.approved) {
-//       return res.status(403).json({ success: false, message: "Your account is pending approval" });
-//     }
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(401).json({ success: false, message: "Incorrect password" });
-//     }
-
-//     const token = jwt.sign(
-//       { email: user.email, id: user._id, accountType: user.accountType },
-//       process.env.JWT_SECRET,
-//       { expiresIn: "24h" }
-//     );
-
-//     user.token = token;
-//     user.password = undefined;
-
-//     console.log("NODE_ENV:", process.env.NODE_ENV);
-
-//     const options = {
-//       expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-//       httpOnly: true,
-//       //secure: process.env.NODE_ENV === "production",
-//       secure:true,
-//       sameSite: "None",
-//     };
-//     // Detect if request is from browser
-//     const isBrowser = req.headers['user-agent']?.includes("Mozilla");
-//     if (isBrowser) {
-//       res.cookie("token", token, options);
-//     }
-//     res.status(200).json({
-//       success: true,
-//       token,
-//       user,
-//       message: "Login successful",
-//     });
-//     // res.cookie("token", token, options).status(200).json({
-//     //   success: true,
-//     //   token,
-//     //   user,
-//     //   message: "Login successful",
-//     // });
-//   } catch (error) {
-//     console.error("Login error:", error);
-//     return res.status(500).json({ success: false, message: "Login failed. Please try again." });
-//   }
-// };
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -188,16 +127,16 @@ exports.login = async (req, res) => {
       return res.status(401).json({ success: false, message: "User not registered. Please sign up." });
     }
 
-    // ✅ FIXED: Doctor approval check
+    
     if (user.accountType === "Doctor") {
-      // Agar approved field exist karti hai aur false hai
+      
       if (user.approved === false) {
         return res.status(403).json({ 
           success: false, 
           message: "Your account is pending approval from admin" 
         });
       }
-      // Agar approved field exist nahi karti, to bhi pending approval
+      
       if (user.approved === undefined) {
         return res.status(403).json({ 
           success: false, 
@@ -252,23 +191,22 @@ exports.login = async (req, res) => {
 exports.sendotp = async (req, res) => {
   try {
     const { email, accountType } = req.body;
-    console.log("📩 Incoming OTP request:", { email, accountType });
-
+    
     if (!email || !accountType) {
-      console.warn("⚠️ Missing email or accountType");
+      
       return res.status(400).json({ success: false, message: "Email and account type are required" });
     }
 
     if (accountType.toLowerCase() === "admin") {
       const existingAdmin = await User.findOne({ accountType: { $regex: /^admin$/i } });
-      console.log("🔍 Admin check:", existingAdmin ? "Admin exists" : "No admin found");
+     
       if (existingAdmin) {
         return res.status(403).json({ success: false, message: "Admin account already exists. OTP not allowed." });
       }
     }
 
     const existingUser = await User.findOne({ email });
-    console.log("🔍 User check:", existingUser ? "User exists" : "User not found");
+    
     if (existingUser) {
       return res.status(401).json({ success: false, message: "User already registered" });
     }
@@ -285,26 +223,26 @@ exports.sendotp = async (req, res) => {
       result = await OTP.findOne({ otp });
       attempts++;
     } while (result && attempts < 5);
-    console.log("🔢 Generated OTP:", otp);
+    
 
     try {
       const newOtp = new OTP({ email, otp });
       await newOtp.save();
-      console.log("✅ OTP saved to DB and email hook triggered");
+      
     } catch (dbError) {
-      console.error("❌ OTP DB save error:", dbError);
+      console.error("OTP DB save error:", dbError);
       return res.status(500).json({ success: false, message: "Failed to save OTP to database" });
     }
 
     return res.status(200).json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
-    console.error("🔥 Unhandled sendotp error:", error);
+    console.error("Unhandled sendotp error:", error);
     return res.status(500).json({ success: false, message: "Failed to send OTP" });
   }
 };
 
 
-// 🔄 Change Password Controller
+// Change Password Controller
 exports.changePassword = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -351,7 +289,7 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-// 🔐 Forgot Password Controller
+//  Forgot Password Controller
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -388,7 +326,7 @@ exports.forgotPassword = async (req, res) => {
   }
 };
 
-// 🔐 Reset Password Controller
+//  Reset Password Controller
 exports.resetPasswordToken = async (req, res) => {
   try {
     const { token } = req.params;
@@ -437,7 +375,7 @@ exports.resetPasswordToken = async (req, res) => {
   }
 };
 
-// 🗑️ Delete User Controller
+//  Delete User Controller
 
 
 
@@ -478,7 +416,7 @@ exports.deleteUser = async (req, res) => {
 };
 
 
-// 📅 Get User Appointments
+// Get User Appointments
 exports.getUserAppointments = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -500,3 +438,5 @@ exports.getUserAppointments = async (req, res) => {
     });
   }
 };
+
+

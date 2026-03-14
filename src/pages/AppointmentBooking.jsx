@@ -17,7 +17,7 @@ const loadRazorpayScript = () => {
   });
 };
 
-// 🕒 Round current time to nearest 30-minute slot
+
 const getRoundedTime = () => {
   const now = new Date();
   const minutes = now.getMinutes();
@@ -36,17 +36,11 @@ const AppointmentBooking = () => {
   const [searchParams] = useSearchParams();
   const doctorId = searchParams.get("doctor_id");
   const date = searchParams.get("date");
-  //const time = searchParams.get("time");
-
-  // const [formData, setFormData] = useState({
-  //   doctor_id: doctorId || "",
-  //   appointmentDate: date || new Date().toISOString().slice(0, 10), // default to today
-  //   appointmentTime: time || getRoundedTime(), // default to current rounded time
-  // });
+  
   const [formData, setFormData] = useState({
     doctor_id: doctorId || "",
     appointmentDate: date || new Date().toISOString().slice(0, 10),
-    appointmentTime: getRoundedTime(), // ⏰ Always use real-time
+    appointmentTime: getRoundedTime(), 
   });
 
 

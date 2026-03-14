@@ -28,7 +28,7 @@ async function fixAdminIssue() {
       console.log("Only one Admin exists. No duplicates found.");
     }
 
-    // Step 3: Create unique index
+    
     await users.createIndex(
       { accountType: 1 },
       {
@@ -37,9 +37,9 @@ async function fixAdminIssue() {
       }
     );
 
-    console.log("✅ Admin fix applied successfully");
+    console.log("Admin fix applied successfully");
   } catch (err) {
-    console.error("❌ Error fixing Admin issue:", err);
+    console.error("Error fixing Admin issue:", err);
   } finally {
     await client.close();
   }
